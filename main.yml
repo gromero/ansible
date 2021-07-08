@@ -86,3 +86,16 @@
       responses:
         "Enter target directory for SDK":
           - "\r"
+    notify: Install OpenOCD
+
+  - name: Install OpenOCD
+    copy:
+      src: "{{ ansible_env.HOME }}/zephyr-sdk/sysroots/{{ ansible_architecture }}-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules"
+      dest: "/etc/udev/rules.d"
+      remote_src: yes
+    become: yes
+    notify: udev reload
+
+  - name: udev reload
+    command: "udevadm control --reload"
+    become: yes
