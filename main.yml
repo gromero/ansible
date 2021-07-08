@@ -1,0 +1,7 @@
+- hosts: tvm-dev
+
+  tasks:
+  - name: Clone TVM github repository
+    ansible.builtin.git:
+      repo: https://github.com/apache/tvm.git
+      dest: "{{ lookup('env', 'HOME') }}/git/tvm"
