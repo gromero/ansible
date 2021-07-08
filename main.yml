@@ -32,6 +32,14 @@
       name: west
       extra_args: "--user -U"
 
+  - name: Add west cli to PATH
+    blockinfile:
+      dest: "{{ ansible_env.HOME }}/.bashrc"
+      block: |
+        export PATH=~/.local/bin:"$PATH"
+      marker: '# {mark} ANSIBLE MANAGED BLOCK - west'
+      insertafter: EOF
+
   - name: Clone TVM github repository
     ansible.builtin.git:
       repo: https://github.com/apache/tvm.git
