@@ -51,12 +51,20 @@
       west init --mr v2.5-branch {{ ansible_env.HOME }}/zephyrproject
       cd {{ ansible_env.HOME }}/zephyrproject
       west update
+      # Create zephyrproject/zephyr/scripts/requirements.txt
       west zephyr-export
     args:
       executable: /bin/bash
       # $HOME/zephyrproject exists, skip task
       creates: "{{ ansible_env.HOME }}/zephyrproject"
     notify: Install Zephyr Python dependencies
+
+  - name: Download Zephyr SDK
+    get_url:
+      url: "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.12.4/zephyr-sdk-0.12.4-{{ ansible_architecture }}-linux-setup.run"
+      dest: "{{ ansible_env.HOME }}"
+      mode: 0755
+    notify: Install Zephyr SDK
 
   - name: Clone TVM github repository
     ansible.builtin.git:
@@ -69,3 +77,12 @@
     pip:
       requirements: "{{ ansible_env.HOME }}/zephyrproject/zephyr/scripts/requirements.txt"
       extra_args: "--user"
+
+  - name: Install Zephyr SDK
+    # We need to use 'expect' here because the script has no automatic install process afaics
+    expect:
+      command: "{{ ansible_env.HOME }}/zephyr-sdk-0.12.4-{{ ansible_architecture }}-linux-setup.run"
+      timeout: null
+      responses:
+        "Enter target directory for SDK":
+          - "\r"
