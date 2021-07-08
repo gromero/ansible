@@ -1,6 +1,37 @@
 - hosts: tvm-dev
 
   tasks:
+  - name: Install necessary packages for Zephyr
+    apt:
+      pkg:
+        - git
+        - cmake
+        - ninja-build
+        - gperf
+        - ccache
+        - dfu-util
+        - device-tree-compiler
+        - wget
+        - python3-dev
+        - python3-pip
+        - python3-setuptools
+        - python3-tk
+        - python3-wheel
+        - xz-utils
+        - file
+        - make
+        - gcc
+        - gcc-multilib
+        - g++-multilib
+        - libsdl2-dev
+        - minicom
+    become: yes
+
+  - name: Install west cli
+    pip:
+      name: west
+      extra_args: "--user -U"
+
   - name: Clone TVM github repository
     ansible.builtin.git:
       repo: https://github.com/apache/tvm.git
