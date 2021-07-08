@@ -5,3 +5,4 @@
     ansible.builtin.git:
       repo: https://github.com/apache/tvm.git
       dest: "{{ lookup('env', 'HOME') }}/git/tvm"
+      recursive: yes
