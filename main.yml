@@ -1,7 +1,7 @@
 - hosts: tvm-dev
 
   environment:
-    # Set PATH so .shell module can find 'west' command
+    # Set PATH so ansible.builtin.shell module can find 'west' command
     PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
 
   tasks:
@@ -45,19 +45,27 @@
       insertafter: EOF
 
   - name: Get Zephyr v2.5-branch src and initialize its repo
-    # run task only once per playbook run
+    # Run task only once per playbook run
     run_once: true
     ansible.builtin.shell: |
       west init --mr v2.5-branch {{ ansible_env.HOME }}/zephyrproject
       cd {{ ansible_env.HOME }}/zephyrproject
       west update
+      west zephyr-export
     args:
       executable: /bin/bash
       # $HOME/zephyrproject exists, skip task
       creates: "{{ ansible_env.HOME }}/zephyrproject"
+    notify: Install Zephyr Python dependencies
 
   - name: Clone TVM github repository
     ansible.builtin.git:
       repo: https://github.com/apache/tvm.git
       dest: "{{ lookup('env', 'HOME') }}/git/tvm"
       recursive: yes
+
+  handlers:
+  - name: Install Zephyr Python dependencies
+    pip:
+      requirements: "{{ ansible_env.HOME }}/zephyrproject/zephyr/scripts/requirements.txt"
+      extra_args: "--user"
