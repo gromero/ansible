@@ -27,9 +27,10 @@ of hosts, i.e. `/etc/ansible/hosts`. For instance, if your remote machine is
 called `dev0` your `/etc/ansible/hosts` file has to contain a section
 `[tvm-dev]` listing `dev0`:
 
-> [tvm-dev]
-
-> dev0
+```text
+[tvm-dev]
+dev0
+```
 
 - Clone this repo and run the `tvm.yml` playbook:
 
