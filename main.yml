@@ -2,6 +2,7 @@
 
   environment:
     # Set PATH so ansible.builtin.shell module can find 'west' command
+    # once it's installed.
     PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
 
   tasks:
@@ -82,15 +83,24 @@
         - libxml2-dev
     become: yes
 
+  - name: Install TVM Python dependencies
+    pip:
+      name:
+        - numpy
+        - decorator
+        - attrs
+        - tornado
+        - psutil
+        - scipy
+        - tflite
+      extra_args: "--user"
+
   - name: Download LLVM
     get_url:
       url: "https://apt.llvm.org/llvm.sh"
       dest: "{{ ansible_env.HOME }}"
       mode: 0755
-
-  - name: Install LLVM
-    command: "bash -c {{ ansible_env.HOME }}/llvm.sh"
-    become: yes
+    notify: Install LLVM
 
   - name: Clone TVM github repository
     ansible.builtin.git:
@@ -125,4 +135,8 @@
 
   - name: udev reload
     command: "udevadm control --reload"
+    become: yes
+
+  - name: Install LLVM
+    command: "bash -c {{ ansible_env.HOME }}/llvm.sh"
     become: yes
