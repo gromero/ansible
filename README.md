@@ -42,5 +42,5 @@ $ ansible-playbook ./tvm.yml --ask-become-pass -vv
 
 - Enter your sudo pass password when asked by Ansible
 
-Once the playbook finishes OK, just jump to the machine and build TVM exactly
-as instructed in "What does it provide?" section.
+Once the playbook finishes OK, just jump into the remote machine and build TVM
+exactly as instructed in "What does it provide?" section.
