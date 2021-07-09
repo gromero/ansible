@@ -97,6 +97,8 @@
         - cmake
         - libedit-dev
         - libxml2-dev
+        - qemu
+        - qemu-utils
     become: yes
 
   - name: Install TVM Python dependencies
