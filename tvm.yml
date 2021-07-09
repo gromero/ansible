@@ -99,6 +99,8 @@
         - libxml2-dev
         - qemu
         - qemu-utils
+        - qemu-system-x86
+        - qemu-system-arm
     become: yes
 
   - name: Install TVM Python dependencies
@@ -111,6 +113,7 @@
         - psutil
         - scipy
         - tflite
+        - onnx
       extra_args: "--user"
 
   - name: Download LLVM
