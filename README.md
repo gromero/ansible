@@ -5,9 +5,9 @@ TVM and microTVM from source. So once it's done one just needs to jump to
 `~/git/tvm/build` and build TVM:
 
 ```sh
-cd ~/git/tvm/build
-cmake ..
-make -j $(nproc)
+$ cd ~/git/tvm/build
+$ cmake ..
+$ make -j $(nproc)
 ```
 
 ### How should I execute it?
@@ -15,7 +15,7 @@ make -j $(nproc)
 - Install Ansible in your local machine:
 
 ```sh
-sudo apt-get install ansible
+$ sudo apt-get install ansible
 ```
 
 - Make sure you have ssh access (via ssh-key) and sudo in the remote machine
@@ -35,9 +35,9 @@ dev0
 - Clone this repo and run the `tvm.yml` playbook:
 
 ```sh
-git clone https://github.com/gromero/ansible.git
-cd ansible
-ansible-playbook ./tvm.yml --ask-become-pass -vv
+$ git clone https://github.com/gromero/ansible.git
+$ cd ansible
+$ ansible-playbook ./tvm.yml --ask-become-pass -vv
 ```
 
 - Enter your sudo pass password when asked by Ansible
