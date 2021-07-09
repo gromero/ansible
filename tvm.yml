@@ -114,6 +114,8 @@
         - scipy
         - tflite
         - onnx
+        - pytest
+        - Pillow
       extra_args: "--user"
 
   - name: Download LLVM
