@@ -5,6 +5,10 @@
     # once it's installed.
     PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
 
+########################
+#### Install Zephyr ####
+########################
+
   tasks:
   - name: Install necessary packages for Zephyr
     apt:
@@ -67,6 +71,10 @@
       mode: 0755
     notify: Install Zephyr SDK
 
+##################################
+#### Install TVM dependencies ####
+##################################
+
   - name: Install TVM dependencies
     apt:
       pkg:
@@ -102,11 +110,31 @@
       mode: 0755
     notify: Install LLVM
 
+#####################
+#### Install TVM ####
+#####################
+
   - name: Clone TVM github repository
     ansible.builtin.git:
       repo: https://github.com/apache/tvm.git
       dest: "{{ lookup('env', 'HOME') }}/git/tvm"
       recursive: yes
+
+  - name: Create build dir
+    ansible.builtin.file:
+      path: "{{ ansible_env.HOME }}/git/tvm/build"
+      state: directory
+      mode: 0755
+
+  - name: Copy TVM config file to build/ dir
+    copy:
+      src: "{{ playbook_dir }}/files/config.cmake"
+      dest: "{{ ansible_env.HOME }}/git/tvm/build"
+
+#### HANDLERS ####
+
+# Handlers will be triggered only on certain events,
+# in an synchronous way.
 
   handlers:
   - name: Install Zephyr Python dependencies
