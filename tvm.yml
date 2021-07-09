@@ -71,6 +71,14 @@
       mode: 0755
     notify: Install Zephyr SDK
 
+  - name: Set Zephyr env
+    blockinfile:
+      dest: "{{ ansible_env.HOME }}/.bashrc"
+      block: |
+        . $HOME/zephyrproject/zephyr/zephyr-env.sh
+      marker: '# {mark} ANSIBLE MANAGED BLOCK - Zephyr env'
+      insertafter: EOF
+
 ##################################
 #### Install TVM dependencies ####
 ##################################
@@ -119,6 +127,15 @@
       repo: https://github.com/apache/tvm.git
       dest: "{{ lookup('env', 'HOME') }}/git/tvm"
       recursive: yes
+
+  - name: Set TVM_HOME and PYTHONPATH env vars
+    blockinfile:
+      dest: "{{ ansible_env.HOME }}/.bashrc"
+      block: |
+        export TVM_HOME="{{ ansible_env.HOME }}/git/tvm"
+        export PYTHONPATH=$TVM_HOME/python:${PYTHONPATH}
+      marker: '# {mark} ANSIBLE MANAGED BLOCK - TVM'
+      insertafter: EOF
 
   - name: Create build dir
     ansible.builtin.file:
