@@ -18,9 +18,9 @@ make -j $(nproc)
 sudo apt-get install ansible
 ```
 
-- Make sure you have ssh access (via ssh-key) and sudo in remote machine when
-logging from the local machine, where you've just installed Ansible and from
-where you're going to execute the script.
+- Make sure you have ssh access (via ssh-key) and sudo in the remote machine
+when logging from the local machine, where you've just installed Ansible and
+from where you're going to execute the script.
 
 - Add the remote machine name (the same use to login via ssh) to Ansible's list
 of hosts, i.e. `/etc/ansible/hosts`. For instance, if your remote machine is
