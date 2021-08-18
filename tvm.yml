@@ -5,11 +5,17 @@
     # once it's installed.
     PATH: "{{ ansible_env.HOME }}/.local/bin:{{ ansible_env.PATH }}"
 
+  tasks:
+
+  - name: Update APT repo
+    apt:
+      update_cache: yes
+    become: yes
+
 ########################
 #### Install Zephyr ####
 ########################
 
-  tasks:
   - name: Install necessary packages for Zephyr
     apt:
       pkg:
