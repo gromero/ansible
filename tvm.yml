@@ -16,7 +16,7 @@
 #### Install Zephyr ####
 ########################
 
-  - name: Install necessary packages for Zephyr
+  - name: Install necessary packages for Zephyr 1/2
     apt:
       pkg:
         - git
@@ -36,11 +36,17 @@
         - file
         - make
         - gcc
-        - gcc-multilib
-        - g++-multilib
         - libsdl2-dev
         - minicom
     become: yes
+
+  - name: Install necessary packages for Zephyr 2/2
+    when: ansible_architecture != "aarch64"
+    apt:
+      pkg:
+        # *-multilib packages not available on arm64
+        - gcc-multilib
+        - g++-multilib
 
   - name: Install west cli
     pip:
