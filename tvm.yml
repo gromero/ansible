@@ -227,5 +227,5 @@
     become: yes
 
   - name: Install LLVM
-    command: "bash -c {{ ansible_env.HOME }}/llvm.sh"
+    command: "bash -c {{ ansible_env.HOME }}/llvm.sh 13"
     become: yes
