@@ -47,6 +47,7 @@
         # *-multilib packages not available on arm64
         - gcc-multilib
         - g++-multilib
+    become: yes
 
   - name: Install west cli
     pip:
