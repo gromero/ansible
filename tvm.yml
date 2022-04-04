@@ -53,6 +53,7 @@
     pip:
       name: west
       extra_args: "--user -U"
+      executable: pip3
 
   - name: Add west cli to PATH
     blockinfile:
