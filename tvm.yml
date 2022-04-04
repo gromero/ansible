@@ -16,6 +16,20 @@
 #### Install Zephyr ####
 ########################
 
+  - name: Add Kitware APT repo key
+    when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "18.04"
+    ansible.builtin.apt_key:
+        url: https://apt.kitware.com/keys/kitware-archive-latest.asc
+        state: present
+    become: yes
+
+  - name: Add Kitware APT rep
+    when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "18.04"
+    ansible.builtin.apt_repository:
+       repo: deb https://apt.kitware.com/ubuntu/ bionic main
+       state: present
+    become: yes
+
   - name: Install necessary packages for Zephyr 1/2
     apt:
       pkg:
